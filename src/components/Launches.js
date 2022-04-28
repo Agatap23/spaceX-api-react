@@ -16,7 +16,7 @@ function generateCard(launch) {
 
   return (
     <Card key={launch.name} style={{ width: "18rem" }} className="mb-3">
-      <Card.Img variant="top" src={launch.links.patch.small}></Card.Img>
+      <Card.Img variant="top" src={launch.links.patch.small ? launch.links.patch.small : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"}></Card.Img>
       <Card.Body>
         <Card.Title>{launch.name}</Card.Title>
         <Card.Subtitle className={launchStatus.color}>

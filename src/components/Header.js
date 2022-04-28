@@ -7,18 +7,18 @@ class Header extends React.Component {
     }
 
     handleChange = (e) => {
-        let query = {"query": {}, "options": {"pagination": false}};
+        let query = {};
         switch (e.target.value) {
             case "":
             break;
             case "success":
-                query.query = {"success": true};
+                query = {"success": true};
             break;
             case "failed":
-                query.query = {"success": false};
+                query = {"success": false};
             break;
             case "upcoming":
-                query.query = {"upcoming": true};
+                query = {"upcoming": true};
             break;
         }
         this.props.onSelectChange(query)
