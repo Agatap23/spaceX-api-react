@@ -41,6 +41,7 @@ class App extends React.Component {
   selectChange = (query) => {
     const currentQuery = this.state.body;
     currentQuery.query = query;
+    currentQuery.options.page = 1;
     this.setState({body: currentQuery});
     this.getLaunches();
   };

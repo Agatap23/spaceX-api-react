@@ -1,0 +1,7 @@
+.launch-card {
+    width: 350px;
+}
+.launch-card_text {
+    height: 200px;
+    overflow-y: scroll;
+}

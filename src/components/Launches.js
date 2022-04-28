@@ -1,4 +1,5 @@
 import Card from "react-bootstrap/Card";
+import '../styles/launches.css'
 
 function generateCard(launch) {
   let launchStatus = { color: "", text: "" };
@@ -14,16 +15,20 @@ function generateCard(launch) {
     launchStatus.text = "Failed"
   }
 
+  const launchDate = new Date(launch.date_utc)
+
   return (
-    <Card key={launch.name} style={{ width: "18rem" }} className="mb-3">
+    <Card key={launch.name} className="mb-3 launch-card">
       <Card.Img variant="top" src={launch.links.patch.small ? launch.links.patch.small : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"}></Card.Img>
       <Card.Body>
-        <Card.Title>{launch.name}</Card.Title>
-        <Card.Subtitle className={launchStatus.color}>
+        <Card.Title className="mb-2">{launch.name}</Card.Title>
+        <Card.Subtitle className={launchStatus.color + " mb-2"}>
           {launchStatus.text}
         </Card.Subtitle>
-        <Card.Subtitle>{launch.date_utc}</Card.Subtitle>
+        <Card.Subtitle className="mb-2">{launchDate.toDateString()}</Card.Subtitle>
+        <div className="launch-card_text">
         <Card.Text>{launch.details ? launch.details : "No details available"}</Card.Text>
+        </div>
       </Card.Body>
     </Card>
   );
