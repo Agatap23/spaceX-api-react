@@ -12,12 +12,13 @@ class App extends React.Component {
       response: {},
       apiUrl: "https://api.spacexdata.com/v5/launches/query",
       pageNumber: 1,
+      searchName: null,
       body: {
-        "query": {},
-        "options": {
-          "page": 1
-        }
-      }
+        query: {},
+        options: {
+          page: 1,
+        },
+      },
     };
   }
 
@@ -33,45 +34,64 @@ class App extends React.Component {
         return resp.json();
       })
       .then((resp) => {
-        this.setState({response: resp})
+        this.setState({ response: resp });
         this.setState({ launches: resp.docs });
       });
+  };
+
+  searchValue = (value) => {
+    const currentQuery = this.state.body;
+    if (value.length) {
+      currentQuery.query["name"] = value;
+    } else delete currentQuery.query.name;
+    this.setState({ searchName: value });
+    this.setState({ body: currentQuery });
+    this.getLaunches();
   };
 
   selectChange = (query) => {
     const currentQuery = this.state.body;
     currentQuery.query = query;
+    if (this.state.searchName) {
+      currentQuery.query["name"] = this.state.searchName;
+    }
     currentQuery.options.page = 1;
-    this.setState({body: currentQuery});
+    this.setState({ body: currentQuery });
     this.getLaunches();
   };
 
   nextPage = () => {
-    if(this.state.response.hasNextPage) {
+    if (this.state.response.hasNextPage) {
       const currentQuery = this.state.body;
       currentQuery.options.page = currentQuery.options.page + 1;
       this.getLaunches();
     }
-  }
+  };
 
   prevPage = () => {
-    if(this.state.response.hasPrevPage) {
+    if (this.state.response.hasPrevPage) {
       const currentQuery = this.state.body;
       currentQuery.options.page = currentQuery.options.page - 1;
       this.getLaunches();
     }
-  }
+  };
 
   componentDidMount() {
     this.getLaunches();
   }
 
-  render() {  
+  render() {
     return (
       <div className="App">
-        <Header onSelectChange={this.selectChange} />
+        <Header onSelectChange={this.selectChange} onSearchValue={this.searchValue} />
         <Launches launches={this.state.launches} />
-        <Paginate onNextPage={this.nextPage} onPrevPage={this.prevPage} hasPrevPage={this.state.response.hasPrevPage} hasNextPage={this.state.response.hasNextPage}/>
+        <Paginate
+          onNextPage={this.nextPage}
+          onPrevPage={this.prevPage}
+          hasPrevPage={this.state.response.hasPrevPage}
+          hasNextPage={this.state.response.hasNextPage}
+          display={this.state.launches.length}
+        />
       </div>
     );
   }

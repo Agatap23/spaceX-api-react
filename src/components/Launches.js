@@ -35,13 +35,19 @@ function generateCard(launch) {
 }
 
 const Launches = function (props) {
-  return (
-    <div className="d-flex flex-wrap justify-content-around">
-      {props.launches.map((launch) => {
-        return generateCard(launch);
-      })}
-    </div>
-  );
+  if(props.launches.length) {
+    return (
+      <div className="d-flex flex-wrap justify-content-around">
+        {props.launches.map((launch) => {
+          return generateCard(launch);
+        })}
+      </div>
+    );
+  } else {
+    return (
+      <div className="d-flex justify-content-center">No matching results</div>
+    )
+  }
 };
 
 export default Launches;

@@ -1,9 +1,15 @@
 import React from "react";
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    submitSearch = (e) => {
+        e.preventDefault();
+        this.props.onSearchValue(e.target[0].value)
     }
 
     handleChange = (e) => {
@@ -12,13 +18,13 @@ class Header extends React.Component {
             case "":
             break;
             case "success":
-                query = {"success": true};
+                query = {"success": true}
             break;
             case "failed":
-                query = {"success": false};
+                query = {"success": false}
             break;
             case "upcoming":
-                query = {"upcoming": true};
+                query= {"upcoming": true}
             break;
         }
         this.props.onSelectChange(query)
@@ -27,6 +33,10 @@ class Header extends React.Component {
     render() {
         return (
             <div className="bg-primary p-4 mb-3">
+                <Form onSubmit={this.submitSearch} className="d-flex mb-2">
+                    <Form.Control type="text"></Form.Control>
+                    <Button type="submit" className="bg-white text-black">Search</Button>
+                </Form>
                 <Form.Select onChange={this.handleChange}>
                     <option value="">Show all launches</option>
                     <option value="success">Show only successful launches</option>

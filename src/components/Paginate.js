@@ -15,12 +15,14 @@ class Paginate extends React.Component {
   }
 
   render() {
-    return (
-      <Pagination className="d-flex justify-content-center">
-        <Pagination.Prev disabled={!this.props.hasPrevPage} onClick={this.handlePrevPage}/>
-        <Pagination.Next disabled={!this.props.hasNextPage} onClick={this.handleNextPage}/>
-      </Pagination>
-    );
+    if(this.props.display) {
+      return (
+        <Pagination className="d-flex justify-content-center">
+          <Pagination.Prev disabled={!this.props.hasPrevPage} onClick={this.handlePrevPage}/>
+          <Pagination.Next disabled={!this.props.hasNextPage} onClick={this.handleNextPage}/>
+        </Pagination>
+      );
+    }
   }
 }
 
